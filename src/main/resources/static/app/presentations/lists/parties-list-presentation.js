@@ -9,7 +9,13 @@ var PartiesListComponent = React.createClass({
     var cancelText = "Atšaukti";
     var confirmText = "Patvirtinti";
     var nr = 1;
-    var PartiesList = this.props.parties.map(function(party, index) {
+    var PartiesList = this.props.partiesList.filter(function(party) {
+      if (party.name.toLowerCase().indexOf(self.props.searchText.toLowerCase()) === -1) {
+        return false;
+      } else {
+        return true;
+      }
+    }).map(function(party, index) {
       var title = <h2>Ištrinste <b>{party.name}</b> partiją</h2>
       var body = <h4 className="alert alert-danger">Ar tiktai norite ištrinti <b>{party.name}</b> partiją?</h4>;
       return (
@@ -44,7 +50,7 @@ var PartiesListComponent = React.createClass({
     return (
       <div className="container-fluid">
         <div className="form-group pull-right">
-          <input type="text" className="search form-control" placeholder="Ieškoti" />
+          <input type="text" className="search form-control" placeholder="Ieškoti" onChange={this.props.onSearchTextChange} />
         </div>
         <div>
           <h3>

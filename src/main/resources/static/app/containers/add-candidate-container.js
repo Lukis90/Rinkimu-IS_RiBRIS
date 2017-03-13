@@ -5,22 +5,26 @@ const AddCandidate = require('../presentations/add-candidate-presentation');
 var AddCandidateContainer = React.createClass({
   getInitialState: function() {
     return {
+      id: '',
       name: '',
       surname: '',
       birthDate: '',
+      biography: '',
       party: {
         id: 1
       },
-      biography: '',
       parties: []
     };
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     var self = this;
     axios.get('http://localhost:8090/parties/').then(function(response) {
       self.setState({
-        parties: response.data
+        parties: response.data,
+        party: {
+        	id: response.data[0].id
+        }
       });
     });
     if (this.props.params.candidateId != undefined) {
@@ -30,8 +34,7 @@ var AddCandidateContainer = React.createClass({
         	  name: response.data.name,
             surname: response.data.surname,
             birthDate: response.data.birthDate,
-            biography: response.data.biography,
-            partyName: response.data.partyName
+            biography: response.data.biography
 	        });
 	      });
 	  }

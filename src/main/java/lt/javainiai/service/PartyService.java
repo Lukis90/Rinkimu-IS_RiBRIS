@@ -33,19 +33,19 @@ public class PartyService {
     private CandidateService candidateService;
 
     // Save or update party (with CSV candidate list)
-    public PartyEntity saveOrUpdate(Long id,String partyName, Long partyNo, MultipartFile csvFile) {
-
+    public PartyEntity saveOrUpdate(Long id, String partyName, Long partyNo, MultipartFile csvFile) {
+        List<CandidateEntity> candidateList = new ArrayList<>();
         PartyEntity party = new PartyEntity();
         party.setId(id);
         party.setName(partyName);
         party.setPartyNo(partyNo);
-        // save party to Database and get response from repository;
         PartyEntity partyResponse = partyRepository.saveOrUpdate(party);
-
-        List<CandidateEntity> candidateList = new ArrayList<>();
-
         File file = null;
         InputStreamReader inputStreamReader = null;
+        String lineFromFile = "";
+        // array of values from one row of CSV file
+        String[] values = {};
+
         try {
             file = UtilityMethods.multipartToFile(csvFile);
             InputStream fileInputStream = new FileInputStream(file);
@@ -54,14 +54,9 @@ public class PartyService {
             e.printStackTrace();
         }
 
-        // to store one line from file
-        String data = "";
-        // array of values from one row of CSV file
-        String[] values = {};
-
         try (BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
-            while ((data = bufferedReader.readLine()) != null) {
-                values = data.split(",", -1);
+            while ((lineFromFile = bufferedReader.readLine()) != null) {
+                values = lineFromFile.split(",", -1);
 
                 CandidateEntity candidate = new CandidateEntity();
                 candidate.setPersonsId(Long.valueOf(values[0]));
@@ -72,7 +67,6 @@ public class PartyService {
                 candidate.setMultiMandate(Boolean.valueOf(values[4]));
                 candidate.setBiography(values[5]);
                 candidate.setListPossition(Long.valueOf(values[6]));
-
                 candidateList.add(candidate);
             }
         } catch (IOException e) {
@@ -87,13 +81,11 @@ public class PartyService {
     }
 
     // Save or update party (no CSV candidate list)
-    public PartyEntity saveOrUpdate(Long id,String partyName, Long partyNo) {
-
+    public PartyEntity saveOrUpdate(Long id, String partyName, Long partyNo) {
         PartyEntity party = new PartyEntity();
         party.setId(id);
         party.setName(partyName);
         party.setPartyNo(partyNo);
-        // save party to Database and get response from repository;
         return partyRepository.saveOrUpdate(party);
     }
 

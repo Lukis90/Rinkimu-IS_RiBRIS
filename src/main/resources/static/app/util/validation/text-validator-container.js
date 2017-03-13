@@ -8,7 +8,8 @@ var ValidatorContainer = React.createClass({
           invalidText: false,
           invalidLength: false
         },
-        isValid: true
+        isValid: true,
+        input: ''
       }
     },
 
@@ -17,6 +18,9 @@ var ValidatorContainer = React.createClass({
       var input = newProps.children.props.value;
       const self = this;
       var newState = this.state.errorStates;
+      this.setState({
+        input: input
+      });
       if (input != null && input != '' && input != undefined) {
         if (!exp.test(input)) {
           var newState = {
@@ -79,6 +83,23 @@ var ValidatorContainer = React.createClass({
           });
         }
       }
+
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState) {
+      if((this.state.isValid == nextState.isValid) &&
+         (this.state.errorStates.invalidText == nextState.errorStates.invalidText) &&
+         (this.state.errorStates.invalidLength == nextState.errorStates.invalidLength) &&
+         (this.state.input == nextProps.children.props.value)) {
+        return false;
+      } else {
+        this.props.handleValidStateChange(this.state.isValid);
+        return true;
+      }
+    },
+
+    componentDidUpdate: function(prevProps, prevState) {
+      this.props.handleValidStateChange(this.state.isValid);
     },
 
     render: function() {

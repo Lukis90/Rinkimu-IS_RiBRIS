@@ -5,7 +5,8 @@ const PartiesListPresentation = require('../../presentations/lists/parties-list-
 var PartiesListContainer = React.createClass({
   getInitialState: function() {
     return {
-      parties: []
+      parties: [],
+      searchText: ''
     };
   },
 
@@ -16,6 +17,13 @@ var PartiesListContainer = React.createClass({
       self.setState({
         parties: response.data
       });
+    });
+  },
+
+  handleSearchTextChange: function(e) {
+    var text = e.target.value;
+    this.setState({
+      searchText: text
     });
   },
 
@@ -50,7 +58,9 @@ var PartiesListContainer = React.createClass({
   render: function() {
     return (
       <PartiesListPresentation
-        parties={this.state.parties}
+        searchText={this.state.searchText}
+        onSearchTextChange={this.handleSearchTextChange}
+        partiesList={this.state.parties}
         onEditItem={this.handlePartyEdit}
         onRemoveItem={this.handlePartyRemove}
         onCandidatesListClick={this.handleCandidatesListClick}

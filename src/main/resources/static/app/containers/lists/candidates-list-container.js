@@ -12,26 +12,42 @@ var PartiesListContainer = React.createClass({
 
   componentWillMount: function() {
     var self = this;
+    var candidates;
     if (self.props.location.pathname == "/admin/candidates") {
       axios.get('http://localhost:8090/candidates/')
       .then(function (response) {
-        self.setState({
-            candidates: response.data,
-        });
+        candidates = response.data;
+      }).then(function(){
+    	  axios.get('http://localhost:8090/constituencies/').then(function (response) {
+    		  self.setState({
+    			  candidates: candidates,
+    			  constituencies: response.data
+    		  });
+    	  })
       });
     } else if (self.props.location.pathname.includes("/admin/candidates/constituency/")) {
       axios.get('http://localhost:8090/candidates/by-constituency/' + self.props.params.constituencyId)
       .then(function (response) {
-        self.setState({
-            candidates: response.data,
-        });
+        candidates = response.data;
+      }).then(function(){
+    	  axios.get('http://localhost:8090/constituencies/').then(function (response) {
+    		  self.setState({
+    			  candidates: candidates,
+    			  constituencies: response.data
+    		  });
+    	  })
       });
     } else {
       axios.get('http://localhost:8090/candidates/by-party/' + self.props.params.partyId)
       .then(function (response) {
-        self.setState({
-            candidates: response.data,
-        });
+            candidates = response.data;
+      	}).then(function(){
+    	  axios.get('http://localhost:8090/constituencies/').then(function (response) {
+    		  self.setState({
+    			  candidates: candidates,
+    			  constituencies: response.data
+    		  });
+    	  })
       });
     }
   },
@@ -73,6 +89,7 @@ var PartiesListContainer = React.createClass({
         searchText={this.state.searchText}
         onSearchTextChange={this.handleSearchTextChange}
         onRemoveItem={this.handleCandidateRemove}
+      	constituencies={this.state.constituencies}
       />
     );
   }

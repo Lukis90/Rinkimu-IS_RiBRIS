@@ -72,8 +72,6 @@ public class ConstituencyController {
     public void deleteById(@Valid @PathVariable("id") Long id) {
         constituencyService.deleteById(id);
     }
-    
-    
 
     // Voters activity (3 following methods)
     @RequestMapping(value = "activity/{constituencyId}", method = RequestMethod.GET)
@@ -93,7 +91,5 @@ public class ConstituencyController {
     public List<ConstituencyVotersActivity> getVotersActivityInAllConstituencies() {
         return constituencyService.getVotersActivityInAllConstituencies();
     }
-    
-    
 
 }

@@ -25,7 +25,7 @@ var AddPartyPresentation = React.createClass({
   if(this.props.candidates.length != 0){
 		 fileInput = (<div><label style={{ marginRight: '20px' }}>Kandidatų sąrašas įkeltas</label>
 		   				<button className="btn btn-danger btn-sm" 
-			   onClick={this.props.onDeleteClick}>Ištrinti kandidatus</button></div>);
+			   onClick={this.props.onDeleteClick}>Pašalinti kandidatus</button></div>);
   } else {
 		 fileInput= (<div className="form-group"><label>Prisegti partijos kandidatų sąrašą  &nbsp;
 				   <span className="bg-danger">CSV</span> formatu:</label>

@@ -4,15 +4,13 @@ var ActivityListComponent = React.createClass({
   render: function() {
     var self = this;
     var nr = 1;
-    var activityList = this.props.districts.map(function(district, index) {
+    var activityList = this.props.constituencies.map(function(constituency, index) {
       return (
         <tr key={index}>
           <td>{nr++}</td>
-          <td>{district.name}</td>
-          <td>{district.numOfVoters}</td>
-          <td>{district.constituencyName}</td>
-          <td>{self.props.activity[index].sumOfGivenBallots}</td>
-          <td>{self.props.percents[index].percentOfAllVoters}%</td>
+          <td>{constituency.constituency.name}</td>
+          <td>{constituency.givenBallots}</td>
+          <td>{constituency.percentOfAllVoters}%</td>
         </tr>
       );
     });
@@ -20,14 +18,12 @@ var ActivityListComponent = React.createClass({
     return (
       <div className="container-fluid">
         <div className="panel panel-default">
-        <div className="panel-heading"><strong>Apylinkių sąrašas</strong></div>
+        <div className="panel-heading"><strong>Apygardų sąrašas</strong></div>
           <table className="table">
             <thead>
               <tr>
                 <th>Nr</th>
                 <th>Pavadinimas</th>
-                <th>Balsuotojų skaičius</th>
-                <th>Apygarda</th>
                 <th>Balsavusių skaičius</th>
                 <th>Balsai procentaliai</th>
               </tr>

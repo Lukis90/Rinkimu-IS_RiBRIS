@@ -9,7 +9,14 @@ var RepresentativeListComponent = React.createClass({
     var cancelText = "Atšaukti";
     var confirmText = "Patvirtinti";
     var nr = 1;
-    var RepresentativesList = this.props.representatives.map(function(representative, index) {
+    var RepresentativesList = this.props.representativesList.filter(function(representative) {
+      if ((representative.name.toLowerCase().indexOf(self.props.searchText.toLowerCase()) === -1) &&
+          (representative.surname.toLowerCase().indexOf(self.props.searchText.toLowerCase()) === -1)) {
+        return false;
+      } else {
+        return true;
+      }
+    }).map(function(representative, index) {
       var title = <h2>Ištrinste <b>{representative.name} {representative.surname}</b> atstovą</h2>
       var body = <h4 className="alert alert-danger">Ar tiktai norite
         ištrinti <b>{representative.name} {representative.surname}</b> atstovą?</h4>;
@@ -40,7 +47,7 @@ var RepresentativeListComponent = React.createClass({
     return (
       <div className="container-fluid">
         <div className="form-group pull-right">
-          <input type="text" className="search form-control" placeholder="Ieškoti" />
+          <input type="text" className="search form-control" placeholder="Ieškoti" onChange={this.props.onSearchTextChange} />
         </div>
         <div>
           <h3>
@@ -54,6 +61,7 @@ var RepresentativeListComponent = React.createClass({
               <th>Vardas</th>
               <th>Pavardė</th>
               <th>Apylinkė</th>
+              <th>Ištrinti</th>
             </tr>
           </thead>
           <tbody>

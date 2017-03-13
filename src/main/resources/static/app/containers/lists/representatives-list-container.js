@@ -5,7 +5,8 @@ const RepresentativesList = require('../../presentations/lists/representatives-l
 var RepresentativesContainer = React.createClass({
   getInitialState: function() {
     return {
-      representatives: []
+      representatives: [],
+      searchText: ''
     };
   },
 
@@ -26,6 +27,13 @@ var RepresentativesContainer = React.createClass({
     }
   },
 
+  handleSearchTextChange: function(e) {
+    var text = e.target.value;
+    this.setState({
+      searchText: text
+    });
+  },
+
   handleRepresentativeRemove: function(representative) {
     var self = this;
     return function() {
@@ -42,7 +50,9 @@ var RepresentativesContainer = React.createClass({
   render: function() {
     return (
       <RepresentativesList
-        representatives={this.state.representatives}
+        searchText={this.state.searchText}
+        onSearchTextChange={this.handleSearchTextChange}
+        representativesList={this.state.representatives}
         onEditItem={this.handleRepresentativeEdit}
         onRemoveItem={this.handleRepresentativeRemove}
       />

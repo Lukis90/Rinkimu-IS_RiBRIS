@@ -84,12 +84,6 @@ public class PollingDistrictEntity {
     @JsonManagedReference(value = "pollingDistrict-representative")
     private RepresentativeEntity representative;
 
-    @Column(name = "Submitted_Single_Mandate_Results")
-    private Boolean submittedSingleResults = false;
-
-    @Column(name = "Submitted_Multi_Mandate_Results")
-    private Boolean submittedMultiResults = false;
-
     // Constructor
     public PollingDistrictEntity() {
     }
@@ -183,20 +177,35 @@ public class PollingDistrictEntity {
         this.representative = representative;
     }
 
-    public Boolean getSubmittedSingleResults() {
-        return submittedSingleResults;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
     }
 
-    public void setSubmittedSingleResults(Boolean submittedSingleResults) {
-        this.submittedSingleResults = submittedSingleResults;
-    }
-
-    public Boolean getSubmittedMultiResults() {
-        return submittedMultiResults;
-    }
-
-    public void setSubmittedMultiResults(Boolean submittedMultiResults) {
-        this.submittedMultiResults = submittedMultiResults;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PollingDistrictEntity other = (PollingDistrictEntity) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
     }
 
 }
