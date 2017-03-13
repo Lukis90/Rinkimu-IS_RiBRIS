@@ -32,28 +32,53 @@ public class CandidateController {
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public CandidateEntity saveOrUpdate(@Valid @RequestBody CandidateEntity candidate) {
-        return this.candidateService.saveOrUpdate(candidate);
+        return candidateService.saveOrUpdate(candidate);
     }
 
     // Find all
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<CandidateEntity> findAll() {
-        return this.candidateService.findAll();
+        return candidateService.findAll();
+    }
+    
+    // Find all by constituency
+    @RequestMapping(value = "/by-constituency/{id}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<CandidateEntity> findByConstituencyId(@Valid @PathVariable("id") Long id) {
+        return candidateService.findAllFromConstituency(id);
+    }
+    
+    // Find all by constituency
+    @RequestMapping(value = "/by-party/{id}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<CandidateEntity> findByPartyId(@Valid @PathVariable("id") Long id) {
+        return candidateService.findAllFromParty(id);
     }
 
     // Find one
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public CandidateEntity findById(@Valid @PathVariable("id") Long id) {
-        return this.candidateService.findById(id);
+        return candidateService.findById(id);
     }
 
     // Delete one
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@Valid @PathVariable("id") Long id) {
-        this.candidateService.deleteById(id);
+        candidateService.deleteById(id);
     }
-
+    
+    @RequestMapping(value = "/by-constituency/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteByConstituencyId(@Valid @PathVariable("id") Long id){
+    	candidateService.deleteByConstituencyId(id);
+    }
+    
+    @RequestMapping(value = "/by-party/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteByPartyId(@Valid @PathVariable("id") Long id){
+    	candidateService.deleteByPartyId(id);
+    }
 }

@@ -2,6 +2,7 @@ package lt.javainiai.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,16 +25,19 @@ public class PartyEntity {
 
     @Length(min = 1, max = 200)
     private String name;
-
-    @Length(min = 1, max = 5)
+    
     @Column(name = "Party_Number")
-    private String partyNo;
+    private Long partyNo;
 
-    @OneToMany(mappedBy = "party")
+    @OneToMany(mappedBy = "party", cascade=CascadeType.ALL)
     @JsonManagedReference(value = "candidate-party")
     private List<CandidateEntity> candidates;
+    
+    @OneToMany(mappedBy = "party", cascade=CascadeType.ALL)
+    @JsonManagedReference(value = "party-results")
+    private List<PartyResultsEntity> partyResults;
 
-    // Controller
+    // Constructor
     public PartyEntity() {
     }
 
@@ -54,11 +58,11 @@ public class PartyEntity {
         this.name = name;
     }
 
-    public String getPartyNo() {
+    public Long getPartyNo() {
         return partyNo;
     }
 
-    public void setPartyNo(String partyNo) {
+    public void setPartyNo(Long partyNo) {
         this.partyNo = partyNo;
     }
 
@@ -70,9 +74,61 @@ public class PartyEntity {
         this.candidates = candidates;
     }
 
-    @Override
-    public String toString() {
-        return "PartyEntity [id=" + id + ", name=" + name + ", partyNo=" + partyNo + ", candidates=" + candidates + "]";
+    public List<PartyResultsEntity> getPartyResults() {
+        return partyResults;
     }
 
+    public void setPartyResults(List<PartyResultsEntity> partyResults) {
+        this.partyResults = partyResults;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((candidates == null) ? 0 : candidates.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((partyNo == null) ? 0 : partyNo.hashCode());
+        result = prime * result + ((partyResults == null) ? 0 : partyResults.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PartyEntity other = (PartyEntity) obj;
+        if (candidates == null) {
+            if (other.candidates != null)
+                return false;
+        } else if (!candidates.equals(other.candidates))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (partyNo == null) {
+            if (other.partyNo != null)
+                return false;
+        } else if (!partyNo.equals(other.partyNo))
+            return false;
+        if (partyResults == null) {
+            if (other.partyResults != null)
+                return false;
+        } else if (!partyResults.equals(other.partyResults))
+            return false;
+        return true;
+    }
+    
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lt.javainiai.model.RepresentativeEntity;
-import lt.javainiai.repository.RepresentativeRepository;
+import lt.javainiai.security.RepresentativeEntity;
+import lt.javainiai.security.RepresentativeRepository;
 
 @Service
 public class RepresentativeService {

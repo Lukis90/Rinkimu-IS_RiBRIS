@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lt.javainiai.model.PartyEntity;
 
 @Repository
+// @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class PartyRepository implements RepositoryInterface<PartyEntity> {
 
     @Autowired
@@ -28,6 +29,7 @@ public class PartyRepository implements RepositoryInterface<PartyEntity> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<PartyEntity> findAll() {
         return em.createQuery("SELECT p FROM PartyEntity p").getResultList();
@@ -41,8 +43,7 @@ public class PartyRepository implements RepositoryInterface<PartyEntity> {
     @Transactional
     @Override
     public void deleteById(Long id) {
-        PartyEntity partyToRemove = em.find(PartyEntity.class, id);
-        em.remove(partyToRemove);
+        em.remove(findById(id));
     }
 
 }

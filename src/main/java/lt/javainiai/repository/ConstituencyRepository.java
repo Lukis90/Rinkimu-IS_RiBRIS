@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lt.javainiai.model.ConstituencyEntity;
 
 @Repository
+// @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ConstituencyRepository implements RepositoryInterface<ConstituencyEntity> {
 
     @Autowired
@@ -28,9 +29,15 @@ public class ConstituencyRepository implements RepositoryInterface<ConstituencyE
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ConstituencyEntity> findAll() {
         return em.createQuery("SELECT c FROM ConstituencyEntity c").getResultList();
+    }
+
+    public ConstituencyEntity findByName(String name) {
+        return (ConstituencyEntity) em.createQuery("SELECT c FROM ConstituencyEntity c WHERE c.name LIKE :name")
+                .setParameter("name", name).getSingleResult();
     }
 
     @Override
@@ -41,8 +48,7 @@ public class ConstituencyRepository implements RepositoryInterface<ConstituencyE
     @Transactional
     @Override
     public void deleteById(Long id) {
-        ConstituencyEntity constituancyToRemove = em.find(ConstituencyEntity.class, id);
-        em.remove(constituancyToRemove);
+        em.remove(findById(id));
     }
 
 }

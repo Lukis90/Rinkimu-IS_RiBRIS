@@ -1,0 +1,111 @@
+.hop {
+	transition: all .4s ease-in-out;
+}
+
+.hop:hover {
+	transform: scale(1.06);
+	z-index: 1;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+
+/* SideBar Results css */
+
+
+.row-centered {
+  text-align: center;
+}
+
+.side-menu {
+  position: fixed;
+  width: 170px;
+  height: 105px;
+  border-right: 1px solid #e7e7e7;
+  margin: 0;
+}
+
+
+.side-menu .navbar {
+  border: none;
+}
+.side-menu .navbar-header {
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.side-menu .navbar-nav {
+  background: #4CAF50;
+
+}
+
+.side-menu .navbar-nav li {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #e7e7e7;
+}
+.side-menu .navbar-nav li a {
+  padding: 15px;
+  color: #fff;
+}
+
+.side-menu .navbar-nav  li a:hover {
+  color: #000;
+}
+
+
+
+/* Menu bar css */
+
+ .navbar-collapse {
+  background: #4CAF50;
+}
+
+.navbar-collapse .navbar-nav li a{
+  color: #fff;
+}
+
+/* Login css */
+
+.img img{
+  height: 160px;
+  width: 160px;
+}
+
+.info p {
+  color: #000;
+  font-size: 22px;
+}
+
+.ih-item a {
+  color: #4CAF50;
+}
+
+.childrens {
+  width: 1100px;
+  margin-left: 20%;
+}
+
+
+/* Single mandate results table css
+.table-head {
+  font-size: 12px;
+}
+
+.table-head th {
+  text-align: center;
+}
+
+.text-middle {
+  text-align: center;
+}
+
+.react-bs-table {
+  height: 200px;
+}
+
+*/
