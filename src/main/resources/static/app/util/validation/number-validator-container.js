@@ -7,13 +7,17 @@ var ValidatorContainer = React.createClass({
         errorStates: {
           negativeNumber: false
         },
-        isValid: true
+        isValid: true,
+        input: ''
       }
     },
 
     componentWillReceiveProps(newProps) {
       var input = newProps.children.props.value;
       const self = this;
+      this.setState({
+        input: input
+      });
       if (input != null && input != '' && input != undefined) {
         if (parseInt(input) != NaN) {
           if (parseInt(input) < 0) {
@@ -25,7 +29,6 @@ var ValidatorContainer = React.createClass({
               errorStates: newState
             });
           }
-          this.props.handleValidStateChange(this.props.isValid);
         }
         if (parseInt(input) != NaN) {
           if (parseInt(input) >= 0) {
@@ -37,18 +40,18 @@ var ValidatorContainer = React.createClass({
               errorStates: newState
             });
           }
-          this.props.handleValidStateChange(this.props.isValid);
         }
       }
     },
 
     shouldComponentUpdate: function(nextProps, nextState) {
       if((this.state.isValid == nextState.isValid) &&
-         (this.state.errorStates.invalidText == nextState.errorStates.invalidText) &&
-         (this.state.errorStates.invalidLength == nextState.errorStates.invalidLength) &&
+         (this.state.errorStates.negativeNumber == nextState.errorStates.negativeNumber) &&
          (this.state.input == nextProps.children.props.value)) {
+           console.log("skaicius");
         return false;
       } else {
+        console.log("ne skaicius");
         this.props.handleValidStateChange(this.state.isValid);
         return true;
       }

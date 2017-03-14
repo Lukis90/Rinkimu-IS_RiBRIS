@@ -91,15 +91,13 @@ var ValidatorContainer = React.createClass({
          (this.state.errorStates.invalidText == nextState.errorStates.invalidText) &&
          (this.state.errorStates.invalidLength == nextState.errorStates.invalidLength) &&
          (this.state.input == nextProps.children.props.value)) {
+           console.log("lygu");
         return false;
       } else {
+        console.log("ne");
         this.props.handleValidStateChange(this.state.isValid);
         return true;
       }
-    },
-
-    componentDidUpdate: function(prevProps, prevState) {
-      this.props.handleValidStateChange(this.state.isValid);
     },
 
     render: function() {

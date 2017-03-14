@@ -36,6 +36,9 @@ var AddPartyResults = React.createClass({
     this.props.setIds(districtId, this.props.constituencyId);
     axios.get('http://localhost:8090/parties/').then(function(response) {
       self.setState({
+    	district: {
+    	      id: districtId
+    	    },
         partiesList: response.data
       });
     });

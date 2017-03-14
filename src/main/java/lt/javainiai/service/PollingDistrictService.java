@@ -3,8 +3,6 @@ package lt.javainiai.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,8 +66,12 @@ public class PollingDistrictService {
     public Double getVotersActivityInPercentInDistrict(Long districtId) {
         Long givenBallots = getVotersActivityInUnitsInDistrict(districtId);
         Long totalOfVoters = findById(districtId).getNumOfVoters();
-        Double percent = (givenBallots.doubleValue() / totalOfVoters.doubleValue()) * 100.0d;
-        percent = UtilityMethods.round(percent, 2);
+        Double percent = 0.0d;
+
+        if (!totalOfVoters.equals(0L)) {
+            percent = (givenBallots.doubleValue() / totalOfVoters.doubleValue()) * 100.0d;
+            percent = UtilityMethods.round(percent, 2);
+        }
         return percent;
     }
 
@@ -88,7 +90,6 @@ public class PollingDistrictService {
         return activityInDistrictsList;
     }
 
-    @Transactional
     public PollingDistrictEntity postSpoiledBallots(Long districtId, SpoiledResults results) {
         Long single;
         Long multi;

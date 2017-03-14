@@ -2,19 +2,18 @@ package lt.javainiai.utils;
 
 import lt.javainiai.model.PartyEntity;
 
-public class MultiMandatePartyResults implements Comparable<MultiMandatePartyResults> {
+public class WinnerPartyMultiMandate {
 
     private PartyEntity party;
     private Long votes;
-    private Double percentOfValidBallots;
     private Double percentOfAllBallots;
+    private Long numOfMandatesWon;
 
-    public MultiMandatePartyResults(PartyEntity party, Long votes, Double percentOfValidBallots,
-            Double percentOfAllBallots) {
+    public WinnerPartyMultiMandate(PartyEntity party, Long votes, Double percentOfAllBallots, Long numOfMandatesWon) {
         this.party = party;
         this.votes = votes;
-        this.percentOfValidBallots = percentOfValidBallots;
         this.percentOfAllBallots = percentOfAllBallots;
+        this.numOfMandatesWon = numOfMandatesWon;
     }
 
     public PartyEntity getParty() {
@@ -33,14 +32,6 @@ public class MultiMandatePartyResults implements Comparable<MultiMandatePartyRes
         this.votes = votes;
     }
 
-    public Double getPercentOfValidBallots() {
-        return percentOfValidBallots;
-    }
-
-    public void setPercentOfValidBallots(Double percentOfValidBallots) {
-        this.percentOfValidBallots = percentOfValidBallots;
-    }
-
     public Double getPercentOfAllBallots() {
         return percentOfAllBallots;
     }
@@ -49,9 +40,12 @@ public class MultiMandatePartyResults implements Comparable<MultiMandatePartyRes
         this.percentOfAllBallots = percentOfAllBallots;
     }
 
-    @Override
-    public int compareTo(MultiMandatePartyResults party) {
-        return this.votes.compareTo(party.getVotes());
+    public Long getNumOfMandatesWon() {
+        return numOfMandatesWon;
+    }
+
+    public void setNumOfMandatesWon(Long numOfMandatesWon) {
+        this.numOfMandatesWon = numOfMandatesWon;
     }
 
 }

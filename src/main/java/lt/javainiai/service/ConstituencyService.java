@@ -122,6 +122,7 @@ public class ConstituencyService {
     public Double getVotersActivityInPercentInConstituency(Long constituencyId) {
         Long givenBallots = getVotersActivityInUnitsInConstituency(constituencyId);
         Long totalOfVoters = 0L;
+        Double percent = 0.0d;
         ConstituencyEntity constituency = findById(constituencyId);
         List<PollingDistrictEntity> districts = constituency.getPollingDistricts();
 
@@ -129,9 +130,10 @@ public class ConstituencyService {
             totalOfVoters += district.getNumOfVoters();
         }
 
-        Double percent = (givenBallots.doubleValue() / totalOfVoters.doubleValue()) * 100.0d;
-        percent = UtilityMethods.round(percent, 2);
-
+        if (!totalOfVoters.equals(0L)) {
+            percent = (givenBallots.doubleValue() / totalOfVoters.doubleValue()) * 100.0d;
+            percent = UtilityMethods.round(percent, 2);
+        }
         return percent;
     }
 

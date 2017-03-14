@@ -10,7 +10,9 @@ var AddPartyContainer = React.createClass({
             name: '',
             partyNo: ''
           },
-          candidates:[]
+          candidates:[],
+          isValid: false,
+          text: ''
         }
     },
 
@@ -32,20 +34,21 @@ var AddPartyContainer = React.createClass({
     },
 
     handleSaveClick: function(e) {
-        e.preventDefault();
-        var self = this;
-        var data = new FormData();
-        var config = {
-        	headers: {
-        		'Content-Type': 'multipart/form-data'
-        	}
-        };
-        data.append( 'id', self.state.party.id);
-        data.append( 'name', self.state.party.name );
-        data.append( 'partyNo', self.state.party.partyNo );
+      e.preventDefault();
+      var self = this;
+      var data = new FormData();
+      var config = {
+      	headers: {
+      		'Content-Type': 'multipart/form-data'
+      	}
+      };
+      data.append( 'id', self.state.party.id);
+      data.append( 'name', self.state.party.name );
+      data.append( 'partyNo', self.state.party.partyNo );
 
 
-        // Creating party with CSV candidate list
+      // Creating party with CSV candidate list
+      if(this.state.isValid) {
         if (self.state.multiCandidateFile) {
         	data.append( 'file', self.state.multiCandidateFile );
 
@@ -65,6 +68,17 @@ var AddPartyContainer = React.createClass({
             	console.error( error );
             });
         }
+      } else {
+        this.setState({
+          text: "Ištaisykite klaidas"
+        });
+      }
+    },
+
+    handleValidStateChange: function(isValid) {
+      this.setState({
+        isValid: isValid
+      });
     },
 
 //    Original code (before CSV import):
@@ -100,6 +114,8 @@ var AddPartyContainer = React.createClass({
     render: function() {
         return (
             <AddParty
+              text={this.state.text}
+              handleValidStateChange={this.handleValidStateChange}
               party={this.state.party}
             	onUploadMultiCandidateFile={this.handleUploadMultiCandidateFile}
               candidates={this.state.candidates}

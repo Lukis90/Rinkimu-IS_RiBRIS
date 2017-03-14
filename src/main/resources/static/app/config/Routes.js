@@ -27,8 +27,8 @@ const DistrictsList = require('../containers/lists/districts-list-container');
 const PartiesList = require('../containers/lists/parties-list-container');
 const RepresentativesList = require('../containers/lists/representatives-list-container');
 const CandidatesList = require('../containers/lists/candidates-list-container');
-const ActivityList = require('../containers/lists/activity-list-container');
-
+const ConstituencyActivityList = require('../containers/lists/constituency-activity-list-container');
+const DistrictsActivityList = require('../containers/lists/districts-activity-list-container');
 
 const PublicResultsList = require('../presentations/lists/public-result-list-presentation');
 const SingleMandateList = require('../containers/lists/single-mandate-results-container');
@@ -46,7 +46,8 @@ const routes = (
         <Route path="/single-mandate-districts/:constituencyId" component={SingleMandateDistrictResultsList} />
         <Route path="/single-mandate-district-results" component={SingleMandateDistrictsList} />
         <Route path="/multi-mandate" component={SingleMandateList} />
-        <Route path="/activity" component={ActivityList} />
+        <Route path="/activity" component={ConstituencyActivityList} />
+        <Route path="/polling-districts/activity/all/:constituencyId" component={DistrictsActivityList} />
       </Route>
     </Route>
 

@@ -12,11 +12,13 @@ var AddDistrictContainer = React.createClass({
       constituencies: [],
       constituency: {
         id: 1
-      }
+      },
+      isValid: false,
+      text: ''
     };
   },
 
-  componentDidMount: function() {
+  componentWillMount: function() {
     var self = this;
     axios.get('http://localhost:8090/constituencies/').then(function(response) {
       self.setState({
@@ -34,8 +36,14 @@ var AddDistrictContainer = React.createClass({
 	    		address: response.data.address,
 	    		numOfVoters: response.data.numOfVoters
 	    	});
-	    }); 
+	    });
     }
+  },
+
+  handleValidStateChange: function(isValid) {
+    this.setState({
+      isValid: isValid
+    });
   },
 
   handleSaveClick: function(e) {
@@ -50,9 +58,15 @@ var AddDistrictContainer = React.createClass({
         id : this.state.constituency.id
       }
     };
-    axios.post('http://localhost:8090/polling-districts/', dataList).then(function (response) {
-      self.context.router.push('/admin/districts/');
-    });
+    if(this.state.isValid) {
+      axios.post('http://localhost:8090/polling-districts/', dataList).then(function (response) {
+        self.context.router.push('/admin/districts/');
+      });
+    } else {
+      this.setState({
+        text: "Ištaisykite klaidas"
+      });
+    }
   },
 
   handleNameChange: function(e) {
@@ -83,12 +97,14 @@ var AddDistrictContainer = React.createClass({
 },
 
   handleCancelClick() {
-      this.context.router.push('/admin/districts/');
+    this.context.router.push('/admin/districts/');
   },
 
   render: function() {
     return (
       <AddDistrictComponent
+        text={this.state.text}
+        handleValidStateChange={this.handleValidStateChange}
         onVotersChange={this.handleVotersChange}
         numOfVoters={this.state.numOfVoters}
         onAddressChange={this.handleAddressChange}

@@ -35,6 +35,7 @@ public class PollingDistrictRepository implements RepositoryInterface<PollingDis
         return em.createQuery("SELECT p FROM PollingDistrictEntity p").getResultList();
     }
 
+    @Transactional
     public PollingDistrictEntity postSpoiledBallots(Long districtId, Long single, Long multi) {
         PollingDistrictEntity oldDistrict = findById(districtId);
         PollingDistrictEntity merged;

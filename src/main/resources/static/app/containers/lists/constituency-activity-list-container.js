@@ -1,8 +1,8 @@
 const React = require('react');
 const axios = require('axios');
-const  ActivityListPresentation = require('../../presentations/lists/activity-list-presentation');
+const ActivityListPresentation = require('../../presentations/lists/activity-list-presentation');
 
-var ActivityListContainer = React.createClass({
+var ConstituencyActivityListContainer = React.createClass({
   getInitialState: function() {
     return ({
     	constituencies: []
@@ -17,8 +17,8 @@ var ActivityListContainer = React.createClass({
 	  			constituencies: response.data
 	  		});
 	  	})
-	  	
-	  },
+  },
+  
 
   render: function() {
 	  console.log(this.state);
@@ -30,8 +30,8 @@ var ActivityListContainer = React.createClass({
   }
 });
 
-ActivityListContainer.contextTypes = {
-	    router: React.PropTypes.object.isRequired
-	};
+//ActivityListContainer.contextTypes = {
+//	    router: React.PropTypes.object.isRequired
+//	};
   
-module.exports = ActivityListContainer;
+module.exports = ConstituencyActivityListContainer;

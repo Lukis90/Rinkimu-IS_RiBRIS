@@ -19,6 +19,7 @@ import lt.javainiai.service.PartyResultsService;
 import lt.javainiai.utils.ConstituencyProgress;
 import lt.javainiai.utils.DistrictResultSubmitTime;
 import lt.javainiai.utils.MultiMandatePartyResults;
+import lt.javainiai.utils.WinnerPartyMultiMandate;
 
 @RestController
 @RequestMapping("/party-results/")
@@ -69,10 +70,10 @@ public class PartyResultsController {
         return partyResultsService.getMultiMandateResultsInConstituency(constituencyId);
     }
 
-    @RequestMapping(value = "total-results", method = RequestMethod.GET)
+    @RequestMapping(value = "winner-parties", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<MultiMandatePartyResults> getMultiMandateTotalResults() {
-        return partyResultsService.getMultiMandateTotalResults();
+    public List<WinnerPartyMultiMandate> getWinnerPartiesMultiMandate() {
+        return partyResultsService.getWinnerPartiesMultiMandate();
     }
 
     @RequestMapping(value = "progress", method = RequestMethod.GET)

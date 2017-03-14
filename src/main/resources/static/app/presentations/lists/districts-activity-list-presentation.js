@@ -1,20 +1,22 @@
 const React = require('react');
 const router = require('react-router');
-const Link = require('react-router').Link;
 
-var ActivityListComponent = React.createClass({
+
+var DistrictsActivityListComponent = React.createClass({
+	handleClick: function(e) {
+	    this.router.transitionTo('index');
+	  },
+	
 	render: function() {
     var self = this;
     var nr = 1;
-    var activityList = this.props.constituencies.map(function(constituency, index) {
-    	console.log(constituency);
-    	var link = "/polling-districts/activity/all/" + constituency.constituency.id;
+    var activityList = this.props.districts.map(function(district, index) {
     	return (
         <tr key={index}>
           <td>{nr++}</td>
-          <td><Link to={link}>{constituency.constituency.name}</Link></td>
-          <td>{constituency.givenBallots}</td>
-          <td>{constituency.percentOfAllVoters}%</td>
+          <td>{district.district.name}</td>
+          <td>{district.givenBallots}</td>
+          <td>{district.percentOfAllVoters}%</td>
         </tr>
       );
     });
@@ -22,7 +24,7 @@ var ActivityListComponent = React.createClass({
     return (
       <div className="container-fluid">
         <div className="panel panel-default">
-        <div className="panel-heading"><strong>Apygardų sąrašas</strong></div>
+        <div className="panel-heading"><strong>Apylinkių sąrašas</strong></div>
           <table className="table">
             <thead>
               <tr>
@@ -48,4 +50,4 @@ var ActivityListComponent = React.createClass({
 //  onEditItem: React.PropTypes.func.isRequired
 //}
 
-module.exports = ActivityListComponent;
+module.exports = DistrictsActivityListComponent;

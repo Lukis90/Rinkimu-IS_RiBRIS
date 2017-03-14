@@ -14,10 +14,10 @@ const AddConstituencies = React.createClass({
 	  var buttonText;
 
 	  if(this.props.constituency.id  == "") {
-	  	greeting = <h4>Registruoti naują apygardą</h4>;
+	  	greeting = <h4 className="alert alert-info">Registruoti naują apygardą</h4>;
 	 	  buttonText = "Registruoti";
 	  } else {
-		  greeting = <h4>Redaguoti apygardą</h4>;
+		  greeting = <h4 className="alert alert-info">Redaguoti apygardą</h4>;
 		  buttonText = "Redaguoti";
 	  }
 

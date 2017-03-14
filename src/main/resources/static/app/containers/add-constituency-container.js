@@ -4,16 +4,16 @@ const AddConstituencies = require('../presentations/add-constituency-presentatio
 
 var AddConstituencyContainer = React.createClass({
     getInitialState: function() {
-        return {
-            constituency: {
-              id: '',
-              name: ''
-            },
-            constituencyId: 0,
-            candidates: [],
-            isValid: true,
-            text: ''
-        }
+      return {
+        constituency: {
+          id: '',
+          name: ''
+        },
+        constituencyId: 0,
+        candidates: [],
+        isValid: false,
+        text: ''
+      }
     },
 
     componentWillMount: function() {
@@ -42,50 +42,50 @@ var AddConstituencyContainer = React.createClass({
     },
 
     handleSaveClick: function(e) {
-        e.preventDefault();
-        var self = this;
-        var data = new FormData();
-        var config = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        };
-        data.append( 'id', self.state.constituency.id );
-        data.append( 'name', self.state.constituency.name );
+      e.preventDefault();
+      var self = this;
+      var data = new FormData();
+      var config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+      data.append( 'id', self.state.constituency.id );
+      data.append( 'name', self.state.constituency.name );
+      
+      // Creating party with CSV candidate list
+      if(this.state.isValid) {
+        if(self.state.multiCandidateFile) {
+          data.append( 'file', self.state.multiCandidateFile );
 
-        // Creating party with CSV candidate list
-        if(this.state.isValid) {
-          if(self.state.multiCandidateFile) {
-            data.append( 'file', self.state.multiCandidateFile );
-
-            axios.post('http://localhost:8090/constituencies/csv/', data, config).then(function (response) {
-                self.context.router.push('/admin/constituencies/');
-              }).catch( function( error ) {
-                console.log(error.response.status);
-              });
-
-          } else {
-            // Creating party without CSV candidate list
-            axios.post('http://localhost:8090/constituencies/', data, config).then(function (response) {
-                self.context.router.push('/admin/constituencies/');
-              }).catch( function( error ) {
+          axios.post('http://localhost:8090/constituencies/csv/', data, config).then(function (response) {
+              self.context.router.push('/admin/constituencies/');
+            }).catch( function( error ) {
+              console.log(error.response.status);
             });
-          }
+
         } else {
-          this.setState({
-            text: "Ištaisykite klaidas"
+          // Creating party without CSV candidate list
+          axios.post('http://localhost:8090/constituencies/', data, config).then(function (response) {
+              self.context.router.push('/admin/constituencies/');
+            }).catch( function( error ) {
           });
         }
+      } else {
+        this.setState({
+          text: "Ištaisykite klaidas"
+        });
+      }
     },
 
     handleFieldChange: function(fieldName) {
       var self = this;
-        return function(e) {
-          var constituency = self.state.constituency;
-          constituency[fieldName] = e.target.value;
-          self.setState({
-            constituency: constituency
-          });
+      return function(e) {
+        var constituency = self.state.constituency;
+        constituency[fieldName] = e.target.value;
+        self.setState({
+          constituency: constituency
+        });
       };
     },
 
@@ -96,13 +96,16 @@ var AddConstituencyContainer = React.createClass({
     handleDeleteCandidates: function(){
     	var self = this;
     	axios.delete('http://localhost:8090/candidates/by-constituency/' + this.state.constituency.id);
-    	this.setState({ candidates: []});
+    	this.setState({
+        candidates: []
+      });
     },
 
     render: function() {
       return (
         <AddConstituencies
           text={this.state.text}
+          handleValidStateChange={this.handleValidStateChange}
           constituency={this.state.constituency}
         	candidates={this.state.candidates}
           onSaveClick={this.handleSaveClick}
@@ -110,7 +113,6 @@ var AddConstituencyContainer = React.createClass({
           onFieldChange={this.handleFieldChange}
           onUploadMultiCandidateFile={this.handleUploadMultiCandidateFile}
         	onDeleteClick={this.handleDeleteCandidates}
-          handleValidStateChange={this.handleValidStateChange}
         />
       );
     }
